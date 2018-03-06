@@ -17,6 +17,15 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+  // Change shelf property of book to value of shelf ("wantToRead", "currentlyReading", "read")
+  changeShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(() => {
+      BooksAPI.getAll().then(books => {
+        this.setState({ books: books })
+      })
+    })
+  }
+
   // Fetch the books we have in our library once the component is mounted, insert those in our state
   componentDidMount() {
     BooksAPI.getAll().then(books => {
@@ -60,9 +69,11 @@ class BooksApp extends React.Component {
                   <div className="bookshelf-books">
                     <ol className="books-grid">
                     {/* Books for Currently Reading go here!
-                      Each book with shelf: currentlyReading will get filtered out of list and a component will be inserted for each book*/}
-                      {this.state.books.filter(book => book.shelf === "currentlyReading").map(book => (
-                        <Book books={book} />
+                      Each book with shelf: book with right property will get filtered out of list and a component will be inserted for each appropriate book*/}
+                      {this.state.books.filter(book => book.shelf === "currentlyReading").map((book) => (
+                        <Book
+                          onChangeShelf={this.changeShelf}
+                          book={book} />
                       ))}
                     </ol>
                   </div>
@@ -73,7 +84,9 @@ class BooksApp extends React.Component {
                     <ol className="books-grid">
                     {/* Books for Want to Read go here!*/}
                     {this.state.books.filter(book => book.shelf === "wantToRead").map(book => (
-                      <Book books={book} />
+                      <Book
+                        onChangeShelf={this.changeShelf}
+                        book={book} />
                     ))}
                     </ol>
                   </div>
@@ -84,7 +97,9 @@ class BooksApp extends React.Component {
                     <ol className="books-grid">
                     {/* Books for Read go here!!!!!!!!*/}
                     {this.state.books.filter(book => book.shelf === "read").map(book => (
-                      <Book books={book} />
+                      <Book
+                        onChangeShelf={this.changeShelf}
+                        book={book} />
                     ))}
                     </ol>
                   </div>
