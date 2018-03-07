@@ -172,3 +172,26 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* Popup */
+
+.popup-container {
+  position: fixed;
+  right: 20px;
+  top: 0;
+  padding: 0 5px 5px 5px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  height: auto;
+  width: 120px;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 0px 0px 10px 10px;
+}
+
+.popup-container img {
+  width: 70px;
+  border: 1px solid white;
+}
