@@ -24,7 +24,7 @@ class BooksApp extends React.Component {
     this.setState({ showPopup: true, popupTxt: txt,  affectedBook: book, affectedShelf: shelf })
     setTimeout(() => {
       this.setState({ showPopup: false, popupTxt: '', affectedBook: {}, affectedShelf: '' })
-    }, 3000)
+    }, 3500)
   }
 
   // Fetch the books we have in our library once the component is mounted, insert those in our state

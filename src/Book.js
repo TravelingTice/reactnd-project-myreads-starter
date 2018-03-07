@@ -2,11 +2,24 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 
 class Book extends React.Component {
+
   render () {
+    // Check if thumbnail exists
+    let thumbnail;
+    if (this.props.book.imageLinks) {
+      if (this.props.book.imageLinks.smallThumbnail) {
+        thumbnail = this.props.book.imageLinks.smallThumbnail
+      } else {
+        thumbnail = '/img/noThumbnail.png'
+      }
+    } else {
+      thumbnail = '/img/noThumbnail.png'
+    }
+
     return (
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${this.props.book.imageLinks.smallThumbnail}")` }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url("${thumbnail}")` }}></div>
             <Route
               exact path="/"
               render={() => (

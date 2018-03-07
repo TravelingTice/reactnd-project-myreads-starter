@@ -14,7 +14,7 @@ class Search extends React.Component {
   }
 
   updateQuery = e => {
-    this.setState({ query: e.target.value.trim() })
+    this.setState({ query: e.target.value })
   }
 
   search = e => {
@@ -22,16 +22,16 @@ class Search extends React.Component {
     if(e.keyCode === 13) {
       // If nothing is typed
       if (e.target.value.trim() === '') {
-        this.setState({ query: '', matchedBooks: [] })
+        this.setState({ query: '', matchedBooks: [], wrongQuery: false })
       } else {
         BooksAPI.search(this.state.query)
         .then(books => {
-          this.setState({ matchedBooks: books })
+          this.setState({ matchedBooks: books, wrongQuery: false })
         })
         // If no books were found (query wasn't right)
         .catch(err => {
           this.setState({ query: '', matchedBooks: [], wrongQuery: true })
-          console.log(err)
+          console.log(this.state.matchedBooks, err)
         })
       }
     }
@@ -39,29 +39,19 @@ class Search extends React.Component {
 
   render() {
     // This is for replacing the matchedbooks with books that are in our library (with the shelf property) in the listed books.
-    this.state.matchedBooks.sort();
-    this.props.libBooks.sort();
     // Compare the 2 arrays for matched books
-    this.state.matchedBooks.forEach((book, index) => {
-      this.props.libBooks.forEach(libBook => {
-        if(book.id === libBook.id) {
-          this.state.matchedBooks.splice(index, 1, libBook)
-        }
+      this.state.matchedBooks.forEach((book, index) => {
+        this.props.libBooks.forEach(libBook => {
+          if(book.id === libBook.id) {
+            this.state.matchedBooks.splice(index, 1, libBook)
+          }
+        })
       })
-    })
     return (
         <div className="search-books">
           <div className="search-books-bar">
             <Link className="close-search" to="/">Close</Link>
             <div className="search-books-input-wrapper">
-              {/*
-                NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                You can find these search terms here:
-                https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                you don't find a specific author or title. Every search is limited by search terms.
-              */}
               <input
                 type="text"
                 placeholder="Search by title or author"
@@ -85,7 +75,7 @@ class Search extends React.Component {
             )}
             </ol>
             {/* If no books were found */}
-            {this.state.wrongQuery && this.state.matchedBooks.length <= 0 ? (
+            {this.state.wrongQuery ? (
               <div>No books were found!</div>
             ) : (
               null
