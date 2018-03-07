@@ -14,7 +14,7 @@ class Popup extends React.Component {
     }
     return (
       <div className="popup-container">
-        <p>Book has been {this.props.text}</p>
+        <p>Book "{this.props.book.title}" has been {this.props.text}</p>
         <img src={this.props.book.imageLinks.smallThumbnail} alt="" />
         <p className="description">{description}</p>
       </div>

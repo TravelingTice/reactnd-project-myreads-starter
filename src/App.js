@@ -12,18 +12,19 @@ class BooksApp extends React.Component {
   state = {
     // An array of books currently in our library
     libBooks: [],
+    // Needed for information in the popup
     showPopup: false,
     popupTxt: '',
-    // Needed for information in the popup
     affectedBook: {},
     affectedShelf: ''
   }
 
+  // Open the popup window, after 3 sec, the popup will disappear again
   onShowPopup = (txt, book, shelf) => {
     this.setState({ showPopup: true, popupTxt: txt,  affectedBook: book, affectedShelf: shelf })
     setTimeout(() => {
       this.setState({ showPopup: false, popupTxt: '', affectedBook: {}, affectedShelf: '' })
-    }, 2700)
+    }, 3000)
   }
 
   // Fetch the books we have in our library once the component is mounted, insert those in our state

@@ -8,20 +8,32 @@ import Book from './Book'
 class Search extends React.Component {
   state = {
     query: '',
-    matchedBooks: []
+    matchedBooks: [],
+    // When true, a text appears that says the query had no results
+    wrongQuery: false,
   }
 
   updateQuery = e => {
-    this.setState({ query: e.target.value })
+    this.setState({ query: e.target.value.trim() })
   }
 
   search = e => {
     // If user pressed the 'enter' key, the query will get sent
     if(e.keyCode === 13) {
-      BooksAPI.search(this.state.query)
-      .then(books => {
-        this.setState({ matchedBooks: books })
-      })
+      // If nothing is typed
+      if (e.target.value.trim() === '') {
+        this.setState({ query: '', matchedBooks: [] })
+      } else {
+        BooksAPI.search(this.state.query)
+        .then(books => {
+          this.setState({ matchedBooks: books })
+        })
+        // If no books were found (query wasn't right)
+        .catch(err => {
+          this.setState({ query: '', matchedBooks: [], wrongQuery: true })
+          console.log(err)
+        })
+      }
     }
   }
 
@@ -72,6 +84,12 @@ class Search extends React.Component {
               ))
             )}
             </ol>
+            {/* If no books were found */}
+            {this.state.wrongQuery && this.state.matchedBooks.length <= 0 ? (
+              <div>No books were found!</div>
+            ) : (
+              null
+            )}
           </div>
         </div>
     )
