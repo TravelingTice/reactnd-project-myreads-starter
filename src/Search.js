@@ -13,13 +13,13 @@ class Search extends React.Component {
     wrongQuery: false,
   }
 
+  // Updates query on each value change
   updateQuery = e => {
     this.setState({ query: e.target.value })
   }
 
   search = e => {
     // If user pressed the 'enter' key, the query will get sent
-    if(e.keyCode === 13) {
       // If nothing is typed
       if (e.target.value.trim() === '') {
         this.setState({ query: '', matchedBooks: [], wrongQuery: false })
@@ -34,7 +34,6 @@ class Search extends React.Component {
           console.log(this.state.matchedBooks, err)
         })
       }
-    }
   }
 
   render() {
@@ -57,7 +56,11 @@ class Search extends React.Component {
                 placeholder="Search by title or author"
                 value={this.state.query}
                 onChange={(e) => this.updateQuery(e)}
-                onKeyUp={(e) => this.search(e)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') {
+                    this.search(e)
+                  }
+                }}
               />
             </div>
           </div>
