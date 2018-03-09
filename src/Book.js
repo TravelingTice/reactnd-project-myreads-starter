@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom'
 
 class Book extends React.Component {
 
+
   render () {
     // Check if thumbnail exists
     let thumbnail;

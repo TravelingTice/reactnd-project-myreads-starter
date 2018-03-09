@@ -35,7 +35,7 @@ class Search extends React.Component {
         })
       }
   }
-
+  
   render() {
     // This is for replacing the matchedbooks with books that are in our library (with the shelf property) in the listed books.
     // Compare the 2 arrays for matched books
