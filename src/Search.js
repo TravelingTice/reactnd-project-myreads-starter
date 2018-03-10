@@ -13,29 +13,25 @@ class Search extends React.Component {
     wrongQuery: false,
   }
 
-  // Updates query on each value change
-  updateQuery = e => {
-    this.setState({ query: e.target.value })
-  }
-
   search = e => {
-    // If user pressed the 'enter' key, the query will get sent
-      // If nothing is typed
-      if (e.target.value.trim() === '') {
-        this.setState({ query: '', matchedBooks: [], wrongQuery: false })
-      } else {
-        BooksAPI.search(this.state.query)
-        .then(books => {
+      // Make a search request
+      this.setState({ query: e.target.value })
+      BooksAPI.search(this.state.query)
+      .then(books => {
+        // If nothing is typed
+        if (this.state.query.trim() === '') {
+          this.setState({ query: '', matchedBooks: [], wrongQuery: false})
+        } else {
           this.setState({ matchedBooks: books, wrongQuery: false })
-        })
-        // If no books were found (query wasn't right)
-        .catch(err => {
-          this.setState({ query: '', matchedBooks: [], wrongQuery: true })
-          console.log(this.state.matchedBooks, err)
-        })
-      }
-  }
-  
+        }
+      })
+      // If no books were found (query wasn't right)
+      .catch(err => {
+        this.setState({ matchedBooks: [], wrongQuery: true })
+        console.log(this.state.matchedBooks, err)
+      })
+    }
+
   render() {
     // This is for replacing the matchedbooks with books that are in our library (with the shelf property) in the listed books.
     // Compare the 2 arrays for matched books
@@ -55,12 +51,7 @@ class Search extends React.Component {
                 type="text"
                 placeholder="Search by title or author"
                 value={this.state.query}
-                onChange={(e) => this.updateQuery(e)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter') {
-                    this.search(e)
-                  }
-                }}
+                onChange={(e) => this.search(e)}
               />
             </div>
           </div>

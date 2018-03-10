@@ -21,7 +21,7 @@ The start-up page is the library that contains all of your books. They are arran
 
 You can rearrange your books by clicking the drop-down on each book and clicking on the shelf you want to move them to. A convenient pop-up in the top-right corner will notify you of your action.
 
-If you want to add a book, just click the plus icon in the bottom-right corner, which takes you to a different screen where you can use the input field to fetch books from the backend server, provided by Udacity. When you press 'enter', the books corresponding with your search input will be shown (max 20) and by using the same drop-down, you can add them to your library. The very convenient popup will notify you here as well.
+If you want to add a book, just click the plus icon in the bottom-right corner, which takes you to a different screen where you can use the input field to fetch books from the backend server, provided by Udacity. The books corresponding with your search input will be shown (max 20) and by using the same drop-down, you can add them to your library. The very convenient popup will notify you here as well.
 
 **Note:** The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
 
@@ -55,3 +55,8 @@ If you want to add a book, just click the plus icon in the bottom-right corner, 
 ## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+
+## Features I may add in the future:
+
+- Books that can be dragged from shelf to shelf
+- Popup transition and some other transitions in the app
