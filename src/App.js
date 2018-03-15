@@ -12,7 +12,7 @@ import Popup from './Popup'
 class BooksApp extends React.Component {
   state = {
     // An array of books currently in our library
-    libBooks: [],
+    books: [],
     // Needed for information in the popup
     showPopup: false,
     popupTxt: '',
@@ -31,37 +31,16 @@ class BooksApp extends React.Component {
   // Fetch the books we have in our library once the component is mounted, insert those in our state
   componentDidMount() {
     BooksAPI.getAll().then(books => {
-      this.setState({ libBooks: books})
+      this.setState({ books: books})
     })
   }
 
   // Change shelf property of book to value of shelf ("wantToRead", "currentlyReading", "read")
-  changeShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
-      BooksAPI.getAll().then(books => {
-        this.setState({ libBooks: books })
-      }).then(() => {
-        if(shelf === 'none') {
-          this.onShowPopup('trashed!', book, shelf)
-        } else {
-          this.onShowPopup('moved!', book, shelf)
-        }
-      })
-    })
-  }
-
-  // Updates shelf property of book in server, the query will clear
-  putOnShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
-      BooksAPI.getAll().then(books => {
-        this.setState({ libBooks: books })
-      }).then(() => {
-        if(shelf === 'none') {
-          this.onShowPopup('trashed!', book, shelf)
-        } else {
-          this.onShowPopup('added to the library!', book, shelf)
-        }
-      })
+  shelfChanged = (book, shelf, text) => {
+    BooksAPI.getAll().then(books => {
+      this.setState({ books: books })
+    }).then(() => {
+      this.onShowPopup(text, book, shelf)
     })
   }
 
@@ -72,8 +51,8 @@ class BooksApp extends React.Component {
           exact path="/"
           render={() => (
             <Library
-              libBooks={this.state.libBooks}
-              onChangeShelf={this.changeShelf}
+              books={this.state.books}
+              shelfChanged={this.shelfChanged}
             />
           )}
         />
@@ -81,8 +60,8 @@ class BooksApp extends React.Component {
           exact path="/search"
           render={() => (
             <Search
-              libBooks={this.state.libBooks}
-              putOnShelf={this.putOnShelf}
+              books={this.state.books}
+              shelfChanged={this.shelfChanged}
             />
           )}
         />

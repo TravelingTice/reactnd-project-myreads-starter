@@ -1,8 +1,24 @@
 import React from 'react'
+import * as BooksAPI from './BooksAPI'
+
 import { Route } from 'react-router-dom'
 
 class Book extends React.Component {
+  changeShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(() => {
+      if (this.props.shelfChanged) {
+        let text = '';
+        if (this.props.page === 'library') {
+          text = shelf === 'none' ? 'trashed!' : 'moved!';
+        }
+        if (this.props.page === 'search') {
+          text = shelf === 'none' ? 'trashed' : 'added to library!';
+        }
 
+        this.props.shelfChanged(book, shelf, text);
+      }
+    })
+  }
 
   render () {
     // Check if thumbnail exists
@@ -27,7 +43,7 @@ class Book extends React.Component {
                 <div className="book-shelf-changer">
                   <select
                     value={this.props.book.shelf}
-                    onChange={e => this.props.onChangeShelf(this.props.book, e.target.value)}>
+                    onChange={e => this.changeShelf(this.props.book, e.target.value)}>
                     <option value="none" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>
@@ -44,7 +60,7 @@ class Book extends React.Component {
                 {this.props.book.shelf && this.props.book.shelf !== 'none' ? (
                   <select
                     value={this.props.book.shelf}
-                    onChange={e => this.props.putOnShelf(this.props.book, e.target.value)}>
+                    onChange={e => this.changeShelf(this.props.book, e.target.value)}>
                     <option value="none" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>
@@ -54,7 +70,7 @@ class Book extends React.Component {
                 ) : (
                   <select
                      value={'none'}
-                     onChange={e => this.props.putOnShelf(this.props.book, e.target.value)}>
+                     onChange={e => this.changeShelf(this.props.book, e.target.value)}>
                      <option value="none" disabled>Move to...</option>
                      <option value="currentlyReading">Currently Reading</option>
                      <option value="wantToRead">Want to Read</option>

@@ -9,14 +9,12 @@ class Shelf extends React.Component {
         <h2 className="bookshelf-title">{this.props.heading}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-          {/* Books for "Currently Reading" go here!
-            Each book with shelf: book with right property will get filtered out of list and a component will be inserted for each appropriate book*/}
-            {this.props.libBooks.filter(book => book.shelf === this.props.shelf).map(book => (
+            {this.props.books.map(book => (
             <li key={book.id}>
               <Book
-                onChangeShelf={this.props.onChangeShelf}
-                putOnShelf={this.props.putOnShelf}
-                book={book} />
+              shelfChanged={this.props.shelfChanged}
+              page='library'
+              book={book} />
             </li>
             ))}
           </ol>

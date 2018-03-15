@@ -28,7 +28,6 @@ class Search extends React.Component {
       // If no books were found (query wasn't right)
       .catch(err => {
         this.setState({ matchedBooks: [], wrongQuery: true })
-        console.log(this.state.matchedBooks, err)
       })
     }
 
@@ -36,7 +35,7 @@ class Search extends React.Component {
     // This is for replacing the matchedbooks with books that are in our library (with the shelf property) in the listed books.
     // Compare the 2 arrays for matched books
       this.state.matchedBooks.forEach((book, index) => {
-        this.props.libBooks.forEach(libBook => {
+        this.props.books.forEach(libBook => {
           if(book.id === libBook.id) {
             this.state.matchedBooks.splice(index, 1, libBook)
           }
@@ -62,7 +61,8 @@ class Search extends React.Component {
               <li key={book.id}>
                 <Book
                   book={book}
-                  putOnShelf={this.props.putOnShelf}
+                  shelfChanged={this.props.shelfChanged}
+                  page='search'
                 />
               </li>
               ))
