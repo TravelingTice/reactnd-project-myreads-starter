@@ -16,11 +16,17 @@ class Search extends React.Component {
   search = e => {
       // Make a search request
       this.setState({ query: e.target.value })
+      // First check if input is empty
+      if (e.target.value === '') {
+        this.setState({ matchedBooks: [], wrongQuery: true })
+        return;
+      }
+      // Input isn't empty -> Request is made
       BooksAPI.search(this.state.query)
       .then(books => {
-        // If nothing is typed
-        if (this.state.query.trim() === '') {
-          this.setState({ query: '', matchedBooks: [], wrongQuery: false})
+        // If nothing is found
+        if (!books || books.length === 0) {
+          this.setState({ matchedBooks: [], wrongQuery: true})
         } else {
           this.setState({ matchedBooks: books, wrongQuery: false })
         }
@@ -28,6 +34,7 @@ class Search extends React.Component {
       // If no books were found (query wasn't right)
       .catch(err => {
         this.setState({ matchedBooks: [], wrongQuery: true })
+        console.log(this.state.matchedBooks, err)
       })
     }
 

@@ -14,7 +14,6 @@ class Book extends React.Component {
         if (this.props.page === 'search') {
           text = shelf === 'none' ? 'trashed' : 'added to library!';
         }
-
         this.props.shelfChanged(book, shelf, text);
       }
     })
