@@ -24,6 +24,11 @@ class Search extends React.Component {
       // Input isn't empty -> Request is made
       BooksAPI.search(this.state.query)
       .then(books => {
+        // Because this is asynchronous, it could be that the query is '', but the request hasn't been resolved yet. Therefore this 'double check'
+        if (this.state.query === '') {
+          this.setState({ matchedBooks: [], wrongQuery: false })
+          return;
+        }
         // If nothing is found
         if (!books || books.length === 0) {
           this.setState({ matchedBooks: [], wrongQuery: true})

@@ -42,6 +42,7 @@ If you want to add a book, just click the plus icon in the bottom-right corner, 
     ├── Library.js
     ├── Popup.js
     ├── Search.js
+    ├── Shelf.js
     ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
     ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
     ├── icons # Helpful images for your app. Use at your discretion.
