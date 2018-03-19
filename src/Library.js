@@ -4,18 +4,6 @@ import { Link } from 'react-router-dom'
 import Shelf from './Shelf'
 
 class Library extends React.Component {
-  state = {
-    shelves: [{
-      name: 'currentlyReading',
-      heading: 'Currently Reading'
-    },{
-      name: 'wantToRead',
-      heading: 'Want to Read'
-    },{
-      name: 'read',
-      heading: 'Read'
-    }]
-  }
   render() {
     return (
       <div className="list-books">
@@ -24,15 +12,24 @@ class Library extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            {this.state.shelves.map((shelf, index) => (
               <Shelf
-                key={shelf.name + index}
-                shelf={shelf.name}
-                heading={shelf.heading}
-                books={this.props.books.filter(book => book.shelf === shelf.name)}
+                shelf="currentlyReading"
+                heading="Currently Reading"
+                books={this.props.books.filter(book => book.shelf === 'currentlyReading')}
                 shelfChanged={this.props.shelfChanged}
               />
-            ))}
+              <Shelf
+                shelf="wantToRead"
+                heading="Want to Read"
+                books={this.props.books.filter(book => book.shelf === 'wantToRead')}
+                shelfChanged={this.props.shelfChanged}
+              />
+              <Shelf
+                shelf="read"
+                heading="Read"
+                books={this.props.books.filter(book => book.shelf === 'read')}
+                shelfChanged={this.props.shelfChanged}
+              />
           </div>
         </div>
         {/* The plus-icon in the bottom-right corner will change path to /search and so send us to the search component */}

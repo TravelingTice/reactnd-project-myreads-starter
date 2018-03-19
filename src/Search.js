@@ -21,8 +21,11 @@ class Search extends React.Component {
         this.setState({ matchedBooks: [], wrongQuery: true })
         return;
       }
+      // Old request
+      const scope = this;
+      const query = e.target.value
       // Input isn't empty -> Request is made
-      BooksAPI.search(this.state.query)
+      BooksAPI.search(e.target.value)
       .then(books => {
         // Because this is asynchronous, it could be that the query is '', but the request hasn't been resolved yet. Therefore this 'double check'
         if (this.state.query === '') {
@@ -32,6 +35,9 @@ class Search extends React.Component {
         // If nothing is found
         if (!books || books.length === 0) {
           this.setState({ matchedBooks: [], wrongQuery: true})
+          // Invalidating old request
+        } else if (scope.state.query === query) {
+          this.setState({ matchedBooks: books, wrongQuery: false })
         } else {
           this.setState({ matchedBooks: books, wrongQuery: false })
         }
