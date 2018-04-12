@@ -1,6 +1,6 @@
 import React from 'react'
 // Import components from React Router
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 // Local imports
 import * as BooksAPI from './BooksAPI'
 import './App.css'
